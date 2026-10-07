@@ -27,9 +27,19 @@ bytes = { workspace = true }
 chrono = { workspace = true }
 futures-util = { workspace = true }
 hex = { workspace = true }
+# Real BLAKE3 content-addressed storage, backed by sangdb (hashtrinity::Table) -- the same durable
+# store `lore-storage`'s own ImmutableStore/MutableStore now stand on, not a second, separate
+# iroh-blobs store this crate would otherwise have to keep in sync with it by hand.
+lore-storage = { path = "../../../lore/lore-storage", optional = true }
 tempfile = { workspace = true }
 thiserror = { workspace = true }
 tracing = { workspace = true }
+
+[dev-dependencies]
+tokio = { workspace = true }
+
+[features]
+lore = ["dep:lore-storage"]
 
 [lints]
 workspace = true

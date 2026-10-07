@@ -58,6 +58,9 @@ serde_yaml = "0.9.34"
 sha2 = "0.10.9"
 hmac = "0.12.1" # must share digest with sha2
 thiserror = "2.0.18"
+# Pinned to match webtrainer's version (~/projects/webtrainer) -- one iroh-blobs version across
+# the org's projects, not a second independent pin.
+iroh-blobs = "0.103"
 tokio = { version = "1.49.0", features = ["rt-multi-thread", "macros", "signal", "sync"] }
 tokio-stream = { version = "0.1.18", default-features = false }
 tower = { version = "0.5.3", default-features = false }
@@ -84,3 +87,11 @@ struct_field_names = "allow"
 
 [profile.release]
 debug = true
+
+# Mirrors lore's own workspace patch: lore-transport (a transitive dep of the new lore-storage
+# path dependency in freighter-storage) needs Lore's vendored quinn-proto fork's API, not vanilla
+# crates.io quinn-proto -- a `[patch]` directive is workspace-root-scoped in Cargo, so it doesn't
+# propagate through a path dependency into another project's crate; this repeats the same patch
+# here rather than leaving freighter's build resolving an incompatible quinn-proto version.
+[patch.crates-io]
+quinn-proto = { path = "../lore/vendor/quinn-proto" }
