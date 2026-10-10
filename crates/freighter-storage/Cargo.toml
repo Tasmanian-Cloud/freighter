@@ -30,7 +30,12 @@ hex = { workspace = true }
 # Real BLAKE3 content-addressed storage, backed by sangdb (hashtrinity::Table) -- the same durable
 # store `lore-storage`'s own ImmutableStore/MutableStore now stand on, not a second, separate
 # iroh-blobs store this crate would otherwise have to keep in sync with it by hand.
-lore-storage = { path = "../../../lore/lore-storage", optional = true }
+#
+# Pinned to Tasmanian-Cloud/lore @ 4bffa76b (the lore fork this crate is built against). The
+# previous sibling-directory path layout (`../../../lore/lore-storage`) was unresolvable in a
+# standalone checkout; the git dep makes the build hermetic. Bump the rev when the lore fork
+# gets a stable tag.
+lore-storage = { git = "https://github.com/Tasmanian-Cloud/lore.git", rev = "4bffa76bc782a6ed7354111ac3e733db2aec50c9", path = "lore-storage", optional = true }
 tempfile = { workspace = true }
 thiserror = { workspace = true }
 tracing = { workspace = true }
