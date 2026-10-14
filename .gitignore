@@ -1,3 +1,10 @@
 /target
 /excluded
 *.crate
+# Agent scratch - never commit
+.harness/
+.box/
+.cache/
+__pycache__/
+*.pyc
+*.log
